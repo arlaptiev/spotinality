@@ -26,11 +26,11 @@ export const GeneratorHandler = ({ children }) => {
 
   return (
     <>
-      {loginState === "initial" && (
-        <StartLogin />
+      {generatorState === "initial" && (
+        <StartGen onSetGeneratorState={setGeneratorState} />
       )}
 
-      {loginState === "loggedIn" && children}
+      {generatorState === "loggedIn" && children}
     </>
   );
 };
