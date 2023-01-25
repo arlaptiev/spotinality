@@ -1,5 +1,4 @@
 export const StartLogin = ({ onSetLoginState }) => {
-  const authToken = localStorage?.spotifyAuthToken ?? undefined;
   return (
     <div className="content container">
       <h1>Vana Login</h1>
@@ -13,7 +12,7 @@ export const StartLogin = ({ onSetLoginState }) => {
         <p className="description">
           New to Vana?{" "}
           <a target="_blank" href="https://portrait.vana.com/create">
-            Create your Portrait { authToken }
+            Create your Portrait
           </a>
         </p>
       </section>

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { StartGen } from "components/generator/forms/StartGen";
+import { ProcessingGen } from "components/generator/forms/ProcessingGen";
 import { LoginEmailForm } from "components/auth/vanaForms/LoginEmailForm";
 import { LoginCodeForm } from "components/auth/vanaForms/LoginCodeForm";
 import { StartLogin } from "components/auth/spotifyForms/StartLogin";
@@ -28,6 +30,10 @@ export const GeneratorHandler = ({ children }) => {
     <>
       {generatorState === "initial" && (
         <StartGen onSetGeneratorState={setGeneratorState} />
+      )}
+
+      {generatorState === "processing" && (
+        <ProcessingGen />
       )}
 
       {generatorState === "loggedIn" && children}

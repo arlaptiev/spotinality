@@ -4,6 +4,7 @@ import { GithubIcon } from "components/icons/GithubIcon";
 import { vanaApiPost } from "apis/vanaApi";
 import { VanaLoginHandler } from "components/auth/VanaLoginHandler";
 import { SpotifyLoginHandler } from "components/auth/SpotifyLoginHandler";
+import { GeneratorHandler } from "components/generator/GeneratorHandler";
 
 export default function Home() {
   // User State
@@ -58,49 +59,51 @@ export default function Home() {
       <main className="main">
         <SpotifyLoginHandler>
           <VanaLoginHandler setUser={setUser}>
-            {user.exhibits.length > 0 && (
-              <div className="content container">
-                <div className="space-y-4">
-                  <label htmlFor="prompt-input">Prompt:</label>
-                  <form onSubmit={callTextToImageAPI}>
-                    <input
-                      id="prompt-input"
-                      type="text"
-                      placeholder="Me eating blue spaghetti"
-                      value={prompt}
-                      onChange={(event) => setPrompt(event.target.value)}
-                    />
-                    <button type="submit">Generate image</button>
-                  </form>
-                  <div>Credit balance: {user?.balance ?? 0}</div>
+            <GeneratorHandler>
+              {user.exhibits.length > 0 && (
+                <div className="content container">
+                  <div className="space-y-4">
+                    <label htmlFor="prompt-input">Prompt:</label>
+                    <form onSubmit={callTextToImageAPI}>
+                      <input
+                        id="prompt-input"
+                        type="text"
+                        placeholder="Me eating blue spaghetti"
+                        value={prompt}
+                        onChange={(event) => setPrompt(event.target.value)}
+                      />
+                      <button type="submit">Generate image</button>
+                    </form>
+                    <div>Credit balance: {user?.balance ?? 0}</div>
 
-                  {isLoading && <p>Loading...</p>}
-                  {errorMessage && <p>Error: {errorMessage}</p>}
+                    {isLoading && <p>Loading...</p>}
+                    {errorMessage && <p>Error: {errorMessage}</p>}
 
-                  <div>
-                    <p>
-                      Tip: make sure to include the word "me" in your prompt to
-                      include your face
-                    </p>
+                    <div>
+                      <p>
+                        Tip: make sure to include the word "me" in your prompt to
+                        include your face
+                      </p>
+                    </div>
+                  </div>
+
+                  {/** Show the images a user has created */}
+                  <div className="pt-1 space-y-4">
+                    {user?.textToImage?.map((image, i) => (
+                      <img src={image} key={i} className="w-full" />
+                    ))}
                   </div>
                 </div>
+              )}
 
-                {/** Show the images a user has created */}
-                <div className="pt-1 space-y-4">
-                  {user?.textToImage?.map((image, i) => (
-                    <img src={image} key={i} className="w-full" />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* User doesn't have a trained model*/}
-            {user.exhibits.length === 0 && (
-              <p>
-                Unfortunately, you haven't created a personalized Vana Portrait
-                model yet. Go to https://portrait.vana.com/create to create one 🙂
-              </p>
-            )}
+              {/* User doesn't have a trained model*/}
+              {user.exhibits.length === 0 && (
+                <p>
+                  Unfortunately, you haven't created a personalized Vana Portrait
+                  model yet. Go to https://portrait.vana.com/create to create one 🙂
+                </p>
+              )}
+            </GeneratorHandler>
           </VanaLoginHandler>
         </SpotifyLoginHandler>
       </main>
