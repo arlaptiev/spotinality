@@ -1,4 +1,5 @@
 import config from "../config";
+import queryString from 'query-string'
 
 /**
  * Helper function to make Vana API calls
@@ -23,6 +24,29 @@ const vanaApiFetch = async (path, options = {}) => {
 };
 
 /**
+ * Spotify Authenticate helper function to create URL for authentication
+ */
+const spotifyAuthUrl = () => {
+  // Set up the scope for Spotify application
+  const scope = 'playlist-read-private user-read-email user-library-read';
+
+  // Set up the auth token endpoint and the headers for the request
+  const authUrl = 'https://accounts.spotify.com/authorize';
+
+  // Set up the auth params
+  const authParams = {
+  client_id: config.SPOTIFY_CLIENT_ID,
+  response_type: 'token',
+  redirect_uri: config.URL,
+  scope: scope
+  };
+
+  // Redirect the user to the Spotify authorization page
+  const url = authUrl + '?' + queryString.stringify(authParams);
+  return url
+ }
+
+/**
  * Vana API POST request
  */
 const vanaApiPost = async (path, body) =>
@@ -39,4 +63,4 @@ const vanaApiPost = async (path, body) =>
  */
 const vanaApiGet = async (path) => vanaApiFetch(path, {});
 
-export { vanaApiGet, vanaApiPost };
+export { vanaApiGet, vanaApiPost, spotifyAuthUrl };

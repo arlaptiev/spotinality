@@ -4,7 +4,7 @@ import config from "../config";
  * Helper function to make Vana API calls
  */
 const vanaApiFetch = async (path, options = {}) => {
-  const authToken = localStorage?.authToken ?? undefined;
+  const authToken = localStorage?.vanaAuthToken ?? undefined;
   if (authToken) {
     options.headers = {
       ...options.headers,

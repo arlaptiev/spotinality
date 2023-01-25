@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { LoginEmailForm } from "components/auth/forms/LoginEmailForm";
-import { LoginCodeForm } from "components/auth/forms/LoginCodeForm";
-import { StartLogin } from "components/auth/forms/StartLogin";
+import { LoginEmailForm } from "components/auth/vanaForms/LoginEmailForm";
+import { LoginCodeForm } from "components/auth/vanaForms/LoginCodeForm";
+import { StartLogin } from "components/auth/vanaForms/StartLogin";
 import * as jose from "jose";
 import { vanaApiPost, vanaApiGet } from "apis/vanaApi";
 
@@ -9,14 +9,14 @@ import { vanaApiPost, vanaApiGet } from "apis/vanaApi";
  * This component abstracts login. Feel free to take a look but you can just ignore it in this
  * hackathon
  */
-export const LoginHandler = ({ children, setUser }) => {
+export const VanaLoginHandler = ({ children, setUser }) => {
   const [email, setEmail] = useState("");
   const [loginState, setLoginState] = useState("initial"); // initial, emailInput, codeInput, loggedIn
   const [loading, setLoading] = useState(false);
 
   const refreshUserWithTimeout = async () => {
     const refreshUser = async () => {
-      const authToken = localStorage?.authToken ?? undefined;
+      const authToken = localStorage?.vanaAuthToken ?? undefined;
       if (authToken) {
         const [exhibitsPromise, textToImagePromise, balancePromise] = [
           vanaApiGet("account/exhibits"),
@@ -57,7 +57,7 @@ export const LoginHandler = ({ children, setUser }) => {
    */
   const readCachedAuthToken = () => {
     if (typeof window !== "undefined") {
-      const savedToken = localStorage.getItem("authToken");
+      const savedToken = localStorage.getItem("vanaAuthToken");
       if (savedToken) {
         try {
           const claims = jose.decodeJwt(savedToken);
@@ -104,7 +104,7 @@ export const LoginHandler = ({ children, setUser }) => {
         code,
       });
 
-      localStorage.setItem("authToken", token);
+      localStorage.setItem("vanaAuthToken", token);
       refreshUserWithTimeout();
     } catch (error) {
       console.error("Unable to log in", error);
@@ -114,7 +114,7 @@ export const LoginHandler = ({ children, setUser }) => {
   };
 
   const logOut = () => {
-    localStorage.setItem("authToken", "");
+    localStorage.setItem("vanaAuthToken", "");
     setLoginState("initial");
   };
 
