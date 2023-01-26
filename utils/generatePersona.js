@@ -8,7 +8,6 @@ function timeout(ms) {
 export const generatePersona = async () => {
 
   try {
-
     const spotiData = await getSpotiData()
     const labels = await spotiData2Labels(spotiData)
 
@@ -20,7 +19,8 @@ export const generatePersona = async () => {
 
     const diffusionPrompt = await getDiffusionPrompt(story) // or whatever input is needed
     const diffusionPicUrl = await getDiffusionPic(diffusionPrompt)
-    
+
+    timeout(3000) // fake
 
     return { status: 200, res: { story, vanaPicUrl, diffusionPicUrl } }
   } catch (e) {

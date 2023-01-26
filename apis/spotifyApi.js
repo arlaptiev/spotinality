@@ -14,6 +14,9 @@ const spotifyApiFetch = async (path, options = {}) => {
   }
 
   const response = await fetch(`${config.SPOTIFY_API_URL}/${path}`, options);
+  console.log(response)
+  console.log(response.status)
+  console.log(response.statusCode)
   const data = await response.json();
 
   if (response.ok && data.success === true) {
