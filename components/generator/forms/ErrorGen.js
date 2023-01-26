@@ -1,19 +1,19 @@
 import config from "../../../config";
 
-export const StartGen = ({ onSetGeneratorState }) => {
+export const ErrorGen = ({ error, onSetGeneratorState }) => {
   const authToken = localStorage?.spotifyAuthToken ?? undefined;
   return (
     <div className="content container">
-      <h1>Ready to generate your Spotify Persona</h1>
+      <h1>Something went wrong in the process :c</h1>
       <section className="w-full space-y-4">
         <button
           onClick={() => onSetGeneratorState("processing")}
           className="primaryButton w-full"
         >
-          Generate!
+          Re-generate!
         </button>
         <p className="description">
-          SpotifyAuthToken: { authToken }
+          Error: {error.message}
         </p>
       </section>
     </div>

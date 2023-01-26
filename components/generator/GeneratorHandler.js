@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import { StartGen } from "components/generator/forms/StartGen";
 import { ProcessingGen } from "components/generator/forms/ProcessingGen";
-import { LoginEmailForm } from "components/auth/vanaForms/LoginEmailForm";
-import { LoginCodeForm } from "components/auth/vanaForms/LoginCodeForm";
-import { StartLogin } from "components/auth/spotifyForms/StartLogin";
-import { useRouter } from 'next/router'
-import * as jose from "jose";
-import { vanaApiPost, vanaApiGet } from "apis/vanaApi";
-import queryString from 'query-string'
+import { ErrorGen } from "components/generator/forms/ErrorGen";
 
 /**
  * This component abstracts Spotify Persona generation
@@ -16,6 +10,7 @@ import queryString from 'query-string'
 export const GeneratorHandler = ({ children }) => {  
   // set the state, depending on whether the Auth token is passed in or not
   const [generatorState, setGeneratorState] = useState("initial"); // initial, processing, finished
+  const [errorState, setErrorState] = useState(null); // initial, processing, finished
 
   useEffect(() => {
     // try to access the authToken, passed as a fragment identifier from the url
@@ -33,10 +28,14 @@ export const GeneratorHandler = ({ children }) => {
       )}
 
       {generatorState === "processing" && (
-        <ProcessingGen />
+        <ProcessingGen onSetGeneratorState={setGeneratorState} onSetErrorState={setErrorState} />
       )}
 
-      {generatorState === "loggedIn" && children}
+      {generatorState === "error" && (
+        <ErrorGen error={errorState} onSetGeneratorState={setGeneratorState} />
+      )}
+
+      {generatorState === "finished" && children}
     </>
   );
 };

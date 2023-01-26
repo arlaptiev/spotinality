@@ -2,10 +2,10 @@ import config from "../config";
 import queryString from 'query-string'
 
 /**
- * Helper function to make Vana API calls
+ * Helper function to make Spotify API calls
  */
-const vanaApiFetch = async (path, options = {}) => {
-  const authToken = localStorage?.authToken ?? undefined;
+const spotifyApiFetch = async (path, options = {}) => {
+  const authToken = localStorage?.spotifyAuthToken ?? undefined;
   if (authToken) {
     options.headers = {
       ...options.headers,
@@ -13,7 +13,7 @@ const vanaApiFetch = async (path, options = {}) => {
     };
   }
 
-  const response = await fetch(`${config.VANA_API_URL}/${path}`, options);
+  const response = await fetch(`${config.SPOTIFY_API_URL}/${path}`, options);
   const data = await response.json();
 
   if (response.ok && data.success === true) {
@@ -28,7 +28,7 @@ const vanaApiFetch = async (path, options = {}) => {
  */
 const spotifyAuthUrl = () => {
   // Set up the scope for Spotify application
-  const scope = 'playlist-read-private user-read-email user-library-read';
+  const scope = 'user-read-email user-library-read user-top-read user-read-recently-played';
 
   // Set up the auth token endpoint and the headers for the request
   const authUrl = 'https://accounts.spotify.com/authorize';
@@ -47,10 +47,10 @@ const spotifyAuthUrl = () => {
  }
 
 /**
- * Vana API POST request
+ * Spotify API POST request
  */
-const vanaApiPost = async (path, body) =>
-  vanaApiFetch(path, {
+const spotifyApiPost = async (path, body) =>
+  spotifyApiFetch(path, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -59,8 +59,9 @@ const vanaApiPost = async (path, body) =>
   });
 
 /**
- * Vana API GET request
+ * Spotify API GET request
  */
-const vanaApiGet = async (path) => vanaApiFetch(path, {});
+// TODO DO THE PAGE ITERATION
+const spotifyApiGet = async (path) => spotifyApiFetch(path, {});
 
-export { vanaApiGet, vanaApiPost, spotifyAuthUrl };
+export { spotifyApiGet, spotifyApiPost, spotifyAuthUrl };
