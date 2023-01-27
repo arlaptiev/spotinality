@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'ABCWhyteInktrapEdu';
+  src: url('~assets/fonts/ABCWhyteInktrapEdu-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

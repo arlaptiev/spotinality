@@ -1,9 +1,11 @@
-import { useState } from "react";
+import config from "../config";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { GithubIcon } from "components/icons/GithubIcon";
 import { VanaLoginHandler } from "components/auth/VanaLoginHandler";
 import { SpotifyLoginHandler } from "components/auth/SpotifyLoginHandler";
 import { GeneratorHandler } from "components/generator/GeneratorHandler";
+import { BackgroundPicksHandler } from "components/visual/BackgroundPicksHandler";
 
 export default function Home() {
   // User State
@@ -13,27 +15,51 @@ export default function Home() {
     textToImage: [],
   });
 
-  const [gen, setGen] = useState({
-    title: '',
-    story: '',
-    personaPicUrl: '',
-    backgroundPicUrl: '',
-    artists: ''
-  });
+  const [gen, setGen] = useState(null);
+
+  const [personaVisible, setPersonaVisible] = useState(false)
+
+  useEffect(() => {
+    if (gen) {
+      setPersonaVisible(true)
+      console.log("PERSONA VIS")
+    }
+    return () => setPersonaVisible(false)
+  }, [gen]);
+
 
   console.log('GEN', gen)
 
   return (
     <>
       <Head>
-        <title>Spotinality</title>
-        <meta name="description" content="Find out your true Spotify Personality with AI" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
+        {/* <!-- Primary Meta Tags --> */}
+        <title>{config.TITLE}</title>
+        <meta name="title" content={config.TITLE} />
+        <meta name="description" content="Find out your true Spotify Personality with AI" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content={config.THEME_COLOR} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={config.BASE_URL} />
+        <meta property="og:title" content={config.TITLE} />
+        <meta property="og:description" content={config.DESCRIPTION} />
+        <meta property="og:image" content={config.OG_IMG} />
+
+        {/* <!-- Twitter --> */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={config.BASE_URL} />
+        <meta property="twitter:title" content={config.TITLE} />
+        <meta property="twitter:description" content={config.description} />
+        <meta property="twitter:image" content={config.OG_IMG} />
       </Head>
       <header className="header">
         <a
-          href="https://github.com/vana-com/vana-mit-hackathon"
+          href={config.GITHUB}
           target="_blank"
         >
           <GithubIcon />
@@ -44,43 +70,57 @@ export default function Home() {
           <VanaLoginHandler setUser={setVanaUser} user={vanaUser}>
             <GeneratorHandler setGen={setGen}>
               {gen?.personaPicUrl && (
+
                 <>
-                <div className="bacground-container">
+                <div className={`background-container opacity-0 transition-opacity duration-500 ease-in-out ${personaVisible ? 'opacity-100' : ''}`}>
                   <img src="https://assets.website-files.com/63a0bd4589a5b621b9a48596/63a0be892afd7e154b47692d_linur.svg" loading="lazy" alt="" class="image-background" />
                 </div>
 
-                <div className="marquee absolute -top-2 w-full">
+                <div className={`marquee absolute -top-2 w-full opacity-0 transition-opacity duration-500 ease-in-out ${personaVisible ? 'opacity-100' : ''}`}>
                   <div className="marquee__inner">
                     <p className="marquee__line">{gen?.artists}</p>
                     <p className="marquee__line">{gen?.artists}</p>
                   </div>
                 </div>
 
-                <div class="content max-w-screen-2xl lg:max-w-screen-xl">
-                  <div class="mx-auto max-w-screen-section px-4 sm:px-8 lg:px-12 lg:text-left">
-                    <div class="mb-20 grid-cols-1 items-end sm:mb-28 sm:px-20 md:grid-cols-12 md:gap-6 lg:grid lg:px-0">
-                      <div class="col-span-5 col-start-1 text-center lg:text-left">
-                        <h2 class="xs:text-6xl font-ABCWhyteEdu-Bold font-bold text-5xl tracking-[-0.02em] sm:text-7xl xl:text-8xl">{gen?.title.slice(myString.lastIndexOf(" ") + 1)}</h2>
-                        <h2 class="xs:text-6xl font-ABCWhyteEdu-Bold text-5xl tracking-[-0.02em] sm:text-7xl xl:text-8xl">{gen?.title.slice(0, myString.lastIndexOf(" "))}</h2>
-                        <div class="mt-10 font-ABCWhyteEdu-Book text-base font-[350] sm:mt-12 sm:text-lg">
-                          <p>{gen?.story ?? 0}</p>
+                {/* <BackgroundPicksHandler backgroundPicUrls={gen?.backgroundPicUrls}/> */}
+
+                <div className="content max-w-screen-2xl lg:max-w-screen-xl">
+                  <div className="mx-auto max-w-screen-section px-4 sm:px-8 lg:px-12 lg:text-left">
+                    <div className="mb-20 grid-cols-1 items-end sm:mb-28 sm:px-20 md:grid-cols-12 md:gap-6 lg:grid lg:px-0">
+
+                      <div className="col-span-5 col-start-1 text-center lg:text-left">
+
+                          <div className={`transform -translate-x-full transition-transform duration-700 ease-in-out ${personaVisible ? 'translate-x-0' : ''}`}>
+                            <h2 className="xs:text-6xl font-bold text-5xl tracking-[-0.02em] sm:text-7xl xl:text-8xl">{gen?.title.slice(0, gen?.title.lastIndexOf(" "))}</h2>
+                            <h2 className="xs:text-6xl font-high text-5xl tracking-[0.01em] sm:text-7xl xl:text-8xl">{gen?.title.slice(gen?.title.lastIndexOf(" ") + 1)}</h2>
+                          </div>
+
+                        <div className={`transform -translate-x-full transition-transform duration-1000 ease-in-out ${personaVisible ? 'translate-x-0' : ''}`}>
+                          <div className="mt-10 text-base font-[350] sm:mt-12 sm:text-lg">
+                            <p>{gen?.story ?? 0}</p>
+                          </div>
+
+                          <div className="pt-12">
+                            <button
+                              onClick={async (event) => {
+                                event.preventDefault();
+                                onSetGeneratorState("processing")
+                              }}
+                              className="primaryButton w-full"
+                            >
+                              Share
+                            </button>
+                          </div>
                         </div>
-                        <div className="pt-12">
-                          <button
-                            onClick={async (event) => {
-                              event.preventDefault();
-                              onSetGeneratorState("processing")
-                            }}
-                            className="primaryButton w-full"
-                          >
-                            Share
-                          </button>
-                        </div>
+
                       </div>
-                      <div class="relative col-span-5 col-start-8 mt-10 sm:mt-14 lg:mt-0 self-center">
-                        <img src={gen?.personaPicUrl} key={0} className="w-full" />
-                        <img src={gen?.backgroundPicUrl} key={1} className="absolute w-full -z-10 top-5 left-5" />
+
+                      <div className="relative col-span-5 col-start-8 mt-10 sm:mt-14 lg:mt-0 self-center">
+                        <img src={gen?.personaPicUrl} key={0} className={`w-full opacity-0 transition-opacity duration-1000 ease-in-out ${personaVisible ? 'opacity-100 translate-y-0' : ''}`} />
+                        <img src={gen?.backgroundPicUrl} key={1} className={`absolute w-full -z-10 top-7 left-7 opacity-0 transition-opacity duration-1000 ease-in-out ${personaVisible ? 'opacity-100 translate-y-0' : ''}`} />
                       </div>
+
                     </div>
                   </div>
                 </div>

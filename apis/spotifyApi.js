@@ -37,7 +37,7 @@ const spotifyAuthUrl = () => {
   const authParams = {
   client_id: config.SPOTIFY_CLIENT_ID,
   response_type: 'token',
-  redirect_uri: config.URL,
+  redirect_uri: config.BASE_URL,
   scope: scope
   };
 

@@ -115,14 +115,14 @@ export const getBackgroundPic = async (story, labels) => {
 
   console.log('BACKGROUND PIC PROMPT')
 
-  let backgroundPicUrl = 'TO GEN'
+  let backgroundPicUrls = 'TO GEN'
   const dalleres = await openAiApiPost('images/generations', {
     prompt: prompt,
     n: 1,
     size: "1024x1024"
   })
-  backgroundPicUrl = dalleres.data[0].url
+  backgroundPicUrls = dalleres.data.map(item => item.url);
 
   // TODO
-  return backgroundPicUrl
+  return backgroundPicUrls
 }
