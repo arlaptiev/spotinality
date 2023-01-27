@@ -7,6 +7,7 @@ const config = {
 
   SPOTIFY_CLIENT_ID: '61dfecc1a8534d5cbcf78404cb85f891',
   NEIL_API_KEY: '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',
+  NEIL_API_KEY: process.env.OPENAI_KEY,
 
   TITLE: 'Spotinality',
   DESCRIPTION: 'Find out your true Spotify Personality with AI',
