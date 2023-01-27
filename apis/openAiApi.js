@@ -4,18 +4,26 @@ import config from "../config";
  * Helper function to make Vana API calls
  */
 const openAiApiFetch = async (path, options = {}) => {
-  const authToken = config.NEIL_API_KEY
-  console.log('authToken', authToken)
-  console.log('env', process.env.OPENAI_KEY)
-  if (authToken) {
-    options.headers = {
-      ...options.headers,
-      Authorization: `Bearer ${authToken}`,
-    };
+
+  let data = {}
+  let response = { status: 0 }
+  let counter = 0
+
+  while (response.status !== 200) {
+    console.log('TRYING OPENAI KEY n', counter)
+    const authToken = config.FRIENDS_API_KEYS[counter]
+    if (authToken) {
+      options.headers = {
+        ...options.headers,
+        Authorization: `Bearer ${authToken}`,
+      };
+
+    response = await fetch(`${config.OPENAI_API_URL}/${path}`, options);
+    data = await response.json();
+    counter += 1;
   }
 
-  const response = await fetch(`${config.OPENAI_API_URL}/${path}`, options);
-  const data = await response.json();
+  }
 
   if (response.ok && response.status === 200) {
     return data;

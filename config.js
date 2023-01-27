@@ -7,6 +7,12 @@ const config = {
 
   SPOTIFY_CLIENT_ID: '61dfecc1a8534d5cbcf78404cb85f891',
   NEIL_API_KEY: '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',
+  FRIENDS_API_KEYS: [
+    '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',
+    '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',
+    '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',
+    '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'
+  ],
 
   TITLE: 'Spotinality',
   DESCRIPTION: 'Find out your true Spotify Personality with AI',
