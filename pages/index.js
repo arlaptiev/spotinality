@@ -20,6 +20,8 @@ export default function Home() {
     backgroundPicUrl: '',
   });
 
+  console.log('GEN', gen)
+
   return (
     <>
       <Head>

@@ -6,7 +6,7 @@ const config = {
   OPENAI_API_URL: 'https://api.openai.com/v1',
 
   SPOTIFY_CLIENT_ID: '61dfecc1a8534d5cbcf78404cb85f891',
-  NEIL_API_KEY: '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'
+  NEIL_API_KEY: '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'
 };
 
 module.exports = config;
