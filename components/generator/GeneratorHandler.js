@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { StartGen } from "components/generator/forms/StartGen";
 import { ProcessingGen } from "components/generator/forms/ProcessingGen";
-import { PullingGen } from "components/generator/forms/PullingGen";
 import { ErrorGen } from "components/generator/forms/ErrorGen";
 
 /**

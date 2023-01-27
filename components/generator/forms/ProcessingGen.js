@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { generatePersona } from "../../../utils/generatePersona";
 
 /**
@@ -7,19 +7,26 @@ import { generatePersona } from "../../../utils/generatePersona";
 
 export const ProcessingGen = ({ onSetGeneratorState, onSetErrorState, setGen }) => {
 
+  const [processingState, setProcessingState] = useState('initial') // initial, running
+
 
   // do the process
   const process = async () => {
+    if (processingState === 'initial') {
+      setProcessingState('running') // set the flag to prevent running twice
 
-    const res = await generatePersona()
-    console.log(res)
+      const res = await generatePersona()
+      console.log(res)
 
-    if (res.status === 200) {
-      setGen(res.persona)
-      onSetGeneratorState("finished")
-    } else {
-      onSetErrorState(res.error)
-      onSetGeneratorState("error")
+      if (res.status === 200) {
+        setGen(res.persona)
+        onSetGeneratorState("finished")
+      } else {
+        onSetErrorState(res.error)
+        onSetGeneratorState("error")
+      }
+    
+      setProcessingState('initial') // reset flag
     }
   }
 
