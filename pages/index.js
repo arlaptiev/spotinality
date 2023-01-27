@@ -76,7 +76,7 @@ export default function Home() {
                   <img src="https://assets.website-files.com/63a0bd4589a5b621b9a48596/63a0be892afd7e154b47692d_linur.svg" loading="lazy" alt="" class="image-background" />
                 </div>
 
-                <div className={`marquee absolute -top-2 w-full opacity-0 transition-opacity duration-500 ease-in-out ${personaVisible ? 'opacity-100' : ''}`}>
+                <div className={`marquee text-lg absolute -top-2 w-full opacity-0 transition-opacity duration-500 ease-in-out ${personaVisible ? 'opacity-100' : ''}`}>
                   <div className="marquee__inner">
                     <p className="marquee__line">{gen?.artists}</p>
                     <p className="marquee__line">{gen?.artists}</p>
