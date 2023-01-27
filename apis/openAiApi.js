@@ -5,6 +5,8 @@ import config from "../config";
  */
 const openAiApiFetch = async (path, options = {}) => {
   const authToken = config.NEIL_API_KEY
+  console.log('authToken', authToken)
+  console.log('env', process.env.OPENAI_KEY)
   if (authToken) {
     options.headers = {
       ...options.headers,
