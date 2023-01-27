@@ -51,7 +51,7 @@ const descriptors_paint = descriptorsStr_paint.split(',')
  */
 
 export const getStory = async (labels) => {
-  const prompt = `Write a very short, present tense story about me and my joy for ${labels.genre} music. Use lots of visual adjectives to describe ${labels.genre} music. Dont use intimate words.`
+  const prompt = `Write a very short, present tense, story about me and my joy for ${labels.genre} music. Use lots of adjectives to describe ${labels.genre} music.`
   console.log('STORY PROMPT', prompt)
   let story = 'TO GEN'
   const chatres = await openAiApiPost('engines/text-davinci-003/completions', {
