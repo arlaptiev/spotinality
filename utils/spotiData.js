@@ -22,7 +22,12 @@ export const spotiData2Labels = async (data) => {
     rec_names_of_tr: [
       data.data_4.items[0].track.album.name,
       data.data_4.items[1].track.album.name,data.data_4.items[2].track.album.name,
-      data.data_4.items[3].track.album.name,data.data_4.items[4].track.album.name
+      data.data_4.items[3].track.album.name,data.data_4.items[4].track.album.name,
+      data.data_4.items[5].track.album.name,
+      data.data_4.items[6].track.album.name,data.data_4.items[7].track.album.name,
+      data.data_4.items[8].track.album.name,data.data_4.items[9].track.album.name,
+      data.data_4.items[10].track.album.name,data.data_4.items[11].track.album.name,
+      data.data_4.items[12].track.album.name,data.data_4.items[13].track.album.name
     ]
 
   }
