@@ -1,5 +1,5 @@
 const config = {
-  BASE_URL: process.env.NODE_ENV === 'prod' ? 'https://spotinality.vercel.app/' : 'http://0.0.0.0:3000',
+  BASE_URL: process.env.NODE_ENV === 'production' ? 'https://spotinality.vercel.app' : 'http://0.0.0.0:3000',
 
   VANA_API_URL: 'https://api.vana.com/api/v0',
   SPOTIFY_API_URL: 'https://api.spotify.com/v1',
