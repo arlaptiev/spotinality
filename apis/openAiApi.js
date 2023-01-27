@@ -3,8 +3,8 @@ import config from "../config";
 /**
  * Helper function to make Vana API calls
  */
-const vanaApiFetch = async (path, options = {}) => {
-  const authToken = localStorage?.authToken ?? undefined;
+const openAiApiFetch = async (path, options = {}) => {
+  const authToken = config.NEIL_API_KEY
   if (authToken) {
     options.headers = {
       ...options.headers,
@@ -12,10 +12,10 @@ const vanaApiFetch = async (path, options = {}) => {
     };
   }
 
-  const response = await fetch(`${config.VANA_API_URL}/${path}`, options);
+  const response = await fetch(`${config.OPENAI_API_URL}/${path}`, options);
   const data = await response.json();
 
-  if (response.ok && data.success === true) {
+  if (response.ok && response.status === 200) {
     return data;
   } else {
     console.error(`Error calling ${path}`, data.message);
@@ -25,8 +25,8 @@ const vanaApiFetch = async (path, options = {}) => {
 /**
  * Vana API POST request
  */
-const vanaApiPost = async (path, body) =>
-  vanaApiFetch(path, {
+const openAiApiPost = async (path, body) =>
+  openAiApiFetch(path, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -37,6 +37,6 @@ const vanaApiPost = async (path, body) =>
 /**
  * Vana API GET request
  */
-const vanaApiGet = async (path) => vanaApiFetch(path, {});
+const openAiApiGet = async (path) => openAiApiFetch(path, {});
 
-export { vanaApiGet, vanaApiPost };
+export { openAiApiGet, openAiApiPost };

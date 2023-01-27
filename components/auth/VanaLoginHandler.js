@@ -9,7 +9,7 @@ import { vanaApiPost, vanaApiGet } from "apis/vanaApi";
  * This component abstracts login. Feel free to take a look but you can just ignore it in this
  * hackathon
  */
-export const VanaLoginHandler = ({ children, setUser }) => {
+export const VanaLoginHandler = ({ children, setUser, user }) => {
   const [email, setEmail] = useState("");
   const [loginState, setLoginState] = useState("initial"); // initial, emailInput, codeInput, loggedIn
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export const VanaLoginHandler = ({ children, setUser }) => {
           textToImage: textToImageResponse?.urls ?? [],
         };
 
-        setUser(newUser);
+        setUser({...user, ...newUser});
         setLoginState("loggedIn");
       }
     };

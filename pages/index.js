@@ -14,31 +14,11 @@ export default function Home() {
     textToImage: [],
   });
 
-  // Text-to-Image State
-  const [prompt, setPrompt] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const callTextToImageAPI = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    try {
-      await vanaApiPost(`images/generations`, {
-        prompt: prompt.replace(/\bme\b/i, "{target_token}"), // Replace the word "me" with "{target_token}" in the prompt to include yourself in the picture
-        exhibit_name: "generations", // How your images are grouped in your gallery. For this demo, all images will be grouped in the `text-to-image` exhibit
-        n_samples: 2,
-        seed: -1, // The inference seed: A non-negative integer fixes inference so inference on the same (model, prompt) produces the same output
-      });
-      alert(
-        "Successfully submitted prompt. New images will appear in about 7 minutes."
-      );
-    } catch (error) {
-      setErrorMessage("An error occurred while generating the image");
-    }
-
-    setIsLoading(false);
-  };
+  const [gen, setGen] = useState({
+    story: '',
+    personaPicUrl: '',
+    backgroundPicUrl: '',
+  });
 
   return (
     <>
@@ -58,11 +38,16 @@ export default function Home() {
       </header>
       <main className="main">
         <SpotifyLoginHandler>
-          <VanaLoginHandler setUser={setUser}>
-            <GeneratorHandler>
-              {user.exhibits.length > 0 && (
+          <VanaLoginHandler setUser={setUser} user={user}>
+            <GeneratorHandler setGen={setGen}>
+              {gen?.personaPicUrl && (
                 <div className="content container">
                   <div className="space-y-4">
+                    <div>PERSONA_PIC_URL: <br/><img src={gen?.personaPicUrl} key={0} className="w-full" /></div>
+                    <div>STORY: {gen?.story ?? 0}</div>
+                    <div>BACKGROUND_PIC_URL: <img src={gen?.backgroundPicUrl} key={0} className="w-full" /></div>
+
+                    {/* <br/><br/>
                     <label htmlFor="prompt-input">Prompt:</label>
                     <form onSubmit={callTextToImageAPI}>
                       <input
@@ -84,23 +69,22 @@ export default function Home() {
                         Tip: make sure to include the word "me" in your prompt to
                         include your face
                       </p>
-                    </div>
+                    </div> */}
                   </div>
 
                   {/** Show the images a user has created */}
-                  <div className="pt-1 space-y-4">
+                  {/* <div className="pt-1 space-y-4">
                     {user?.textToImage?.map((image, i) => (
                       <img src={image} key={i} className="w-full" />
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               )}
 
               {/* User doesn't have a trained model*/}
-              {user.exhibits.length === 0 && (
+              {typeof gen?.personaPicUrl === 'undefined' && (
                 <p>
-                  Unfortunately, you haven't created a personalized Vana Portrait
-                  model yet. Go to https://portrait.vana.com/create to create one 🙂
+                  Generation failed.
                 </p>
               )}
             </GeneratorHandler>

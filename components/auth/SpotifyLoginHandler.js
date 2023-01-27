@@ -18,12 +18,12 @@ export const SpotifyLoginHandler = ({ children }) => {
   useEffect(() => {
     // try to access the authToken, passed as a fragment identifier from the url
     const fragmentId = window.location.hash
-    
+
     if (fragmentId) {
       if (fragmentId.includes("#access_token=")) {
         const queryObj = queryString.parse(fragmentId)
-        setLoginState("loggedIn")
         localStorage.setItem("spotifyAuthToken", queryObj.access_token);
+        setLoginState("loggedIn")
       }
     }
   }, [])

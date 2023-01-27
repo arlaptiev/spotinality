@@ -1,31 +1,33 @@
 import { useEffect } from "react";
 import { generatePersona } from "../../../utils/generatePersona";
 
-export const ProcessingGen = ({ onSetGeneratorState, onSetErrorState }) => {
+/**
+ * This component abstracts the process of interacting with APIs to get persona data
+ */
+
+export const ProcessingGen = ({ onSetGeneratorState, onSetErrorState, setGen }) => {
+
+
+  // do the process
+  const process = async () => {
+
+    const res = await generatePersona()
+    console.log(res)
+
+    if (res.status === 200) {
+      setGen(res.persona)
+      onSetGeneratorState("finished")
+    } else {
+      onSetErrorState(res.error)
+      onSetGeneratorState("error")
+    }
+  }
 
   useEffect(() => {
-    // do the process
-    const process = async () => {
-
-      const res = await generatePersona()
-
-      if (res.status === 200) {
-        onSetGeneratorState("finished")
-      } else {
-        onSetErrorState(res.error)
-        onSetGeneratorState("error")
-      }
-    }
-
     // call the function
     process()
       // make sure to catch any error
       .catch(console.error);
-    const lastGeneratedTime = localStorage?.lastGeneratedTime ?? undefined;
-    
-    if (lastGeneratedTime) {
-      onSetGeneratorState("finished")
-    }
   }, [])
 
   return (

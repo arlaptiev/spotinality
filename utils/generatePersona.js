@@ -1,9 +1,6 @@
 import { getSpotiData, spotiData2Labels } from "./spotiData"
-import { getStoryPrompt, getStory, getVanaPicPrompt, getVanaPic, getDiffusionPrompt, getDiffusionPic } from "./promptGen"
-
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { getStory, getBackgroundPic, requestPersonaPic } from "./promptGen"
+import { vanaApiPost } from "apis/vanaApi";
 
 export const generatePersona = async () => {
 
@@ -11,18 +8,13 @@ export const generatePersona = async () => {
     const spotiData = await getSpotiData()
     const labels = await spotiData2Labels(spotiData)
 
-    const storyPrompt = await getStoryPrompt(labels)
-    const story = await getStory(storyPrompt)
+    const story = await getStory(labels)
+    const personaPicUrl = await requestPersonaPic(story, labels) // retrieve in PullingGen.js
+    const backgroundPicUrl = await getBackgroundPic(story, labels)
 
-    const vanaPrompt = await getVanaPicPrompt(story) // or whatever input is needed
-    const vanaPicUrl = await getVanaPic(vanaPrompt)
+    const persona = { story, backgroundPicUrl, personaPicUrl }
 
-    const diffusionPrompt = await getDiffusionPrompt(story) // or whatever input is needed
-    const diffusionPicUrl = await getDiffusionPic(diffusionPrompt)
-
-    timeout(3000) // fake
-
-    return { status: 200, res: { story, vanaPicUrl, diffusionPicUrl } }
+    return { status: 200, persona: persona }
   } catch (e) {
     return { status: 500, error: e}
   }
