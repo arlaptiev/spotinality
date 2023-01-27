@@ -4,9 +4,11 @@ import { getStory, getTitle, getBackgroundPic, requestPersonaPic } from "./promp
 export const generatePersona = async () => {
 
   try {
-    // const spotiData = await getSpotiData()
-    // const labels = await spotiData2Labels(spotiData)
-    // console.log(spotiData)
+    const spotiData = await getSpotiData()
+    console.log('spotidata', spotiData)
+    const labels = await spotiData2Labels(spotiData)
+  
+    console.log('labels', labels)
 
     // const title = await getTitle(labels)
     // const story = await getStory(labels)

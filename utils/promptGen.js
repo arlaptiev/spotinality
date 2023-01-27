@@ -13,7 +13,7 @@ import { vanaApiPost  } from "apis/vanaApi"
 const descriptorsStr = 'atmosphere,concept art,ornate,wooden,digital,volumetric,sunbeams,ominous,cinematic,steampunk,UHD,glow,spraypaint,reflections,dramatic,city,holographic,neon,space,seafloor,humanoid,3d,flare,instagram,roman'
 const descriptors = descriptorsStr.split(',')
 
-const descriptorsStr_paint = 'Vincent Van Gogh,Da Vinci,Pablo Picasso'
+const descriptorsStr_paint = 'Vincent Van Gogh,Da Vinci,Pablo Picasso,Banksy'
 const descriptors_paint = descriptorsStr_paint.split(',')
 //  export const getContext = async (labels) => {
 //   const prompt = `Write a little story about my love for ${labels.genre} music.`
@@ -51,7 +51,7 @@ const descriptors_paint = descriptorsStr_paint.split(',')
  */
 
 export const getStory = async (labels) => {
-  const prompt = `Write a very short story about me and my joy for ${labels.genre} music.`
+  const prompt = `Write a very short, present tense, story about me and my joy for ${labels.genre} music. Use lots of adjectives to describe ${labels.genre} music.`
   console.log('STORY PROMPT', prompt)
   let story = 'TO GEN'
   const chatres = await openAiApiPost('engines/text-davinci-003/completions', {
