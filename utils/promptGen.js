@@ -13,6 +13,8 @@ import { vanaApiPost  } from "apis/vanaApi"
 const descriptorsStr = 'atmosphere,concept art,ornate,wooden,digital,volumetric,sunbeams,ominous,cinematic,steampunk,UHD,glow,spraypaint,reflections,dramatic,city,holographic,neon,space,seafloor,humanoid,3d,flare,instagram,roman'
 const descriptors = descriptorsStr.split(',')
 
+const descriptorsStr_paint = 'Vincent Van Gogh,Da Vinci,Pablo Picasso'
+const descriptors_paint = descriptorsStr_paint.split(',')
 //  export const getContext = async (labels) => {
 //   const prompt = `Write a little story about my love for ${labels.genre} music.`
 //   console.log('CONTEXT PROMPT', prompt)
@@ -51,7 +53,7 @@ export const getStory = async (labels) => {
 
 export const requestPersonaPic = async (story, labels) => {
   // Generate context prompt
-  const contextPrompt = `Here is a story: '${story}.' Here is a list of three famous artists: Vincent Van Gogh, Da Vinci, and Pablo Picasso. First, randomly pick one of the painters. Then, take this story and write a concise one sentence prompt that gives the instructions to paint me into a painting created by one of the painters you randomly selected. The painting should depict descriptors from the short story that evoke imagery. Make the prompt shorter.`
+  const contextPrompt = `Here is a story: '${story}.' Take this story and write a concise one sentence prompt with instructions to paint me into a painting created by ${choose(descriptors_paint)} using descriptors from the short story that evoke imagery.`
   console.log('PERSONAL PIC CONTEXT PROMPT', contextPrompt)
   let prompt = 'TO GEN'
   const chatres = await openAiApiPost('engines/text-davinci-003/completions', {
