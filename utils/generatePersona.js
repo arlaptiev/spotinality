@@ -5,14 +5,16 @@ export const generatePersona = async () => {
 
   try {
     const spotiData = await getSpotiData()
+    console.log('spotidata', spotiData)
     const labels = await spotiData2Labels(spotiData)
-    console.log(spotiData)
+  
+    console.log('labels', labels)
 
-    const story = await getStory(labels)
-    const personaPicUrl = await requestPersonaPic(story, labels) // retrieve in PullingGen.js
-    const backgroundPicUrl = await getBackgroundPic(story, labels)
+    // const story = await getStory(labels)
+    // const personaPicUrl = await requestPersonaPic(story, labels) // retrieve in PullingGen.js
+    // const backgroundPicUrl = await getBackgroundPic(story, labels)
 
-    const persona = { story, backgroundPicUrl, personaPicUrl }
+    // const persona = { story, backgroundPicUrl, personaPicUrl }
 
     // const persona = {
     //   "story": "\n\nI have always been drawn to jazz music ever since I was a young child. The melodic rhythms and soulful sounds of the saxophone, trumpet and drums captivated me like nothing else. I would spend hours listening to my favorite records and learning how to play the piano. I was never the best musician, but I enjoyed every moment of it. As I got older, my love for jazz music only grew stronger and I began to attend live shows whenever I had the chance. The energy and joy that comes with a live jazz performance is something I'll never forget. To this day, jazz music still brings me immense joy and I'm so grateful to have found something that I can connect with so deeply.",
