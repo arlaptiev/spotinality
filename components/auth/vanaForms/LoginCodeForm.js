@@ -18,7 +18,7 @@ export const LoginCodeForm = ({ onLogin, onSetLoginState, loading }) => {
   return (
     <div className="content container">
       <h1>Enter Verification Code</h1>
-      <section className="w-full space-y-4">
+      <section className="w-full space-y-4 pt-4">
         <form onSubmit={handleSubmit} className="relative">
           <input
             type="text"

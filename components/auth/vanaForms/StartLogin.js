@@ -2,7 +2,7 @@ export const StartLogin = ({ onSetLoginState }) => {
   return (
     <div className="content container">
       <h1>Vana Login</h1>
-      <section className="w-full space-y-4">
+      <section className="w-full space-y-4 pt-4">
         <button
           onClick={() => onSetLoginState("emailInput")}
           className="primaryButton w-full"

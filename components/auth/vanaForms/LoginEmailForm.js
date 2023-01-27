@@ -18,7 +18,7 @@ export const LoginEmailForm = ({ onGetCode, onSetLoginState, loading }) => {
   return (
     <div className="content container">
       <h1>Login with Vana</h1>
-      <section className="w-full space-y-4">
+      <section className="w-full space-y-4 pt-4">
         <form onSubmit={handleSubmit} className="relative">
           <input
             type="email"

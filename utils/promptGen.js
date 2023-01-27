@@ -30,6 +30,23 @@ const descriptors_paint = descriptorsStr_paint.split(',')
 // }
 
 /**
+ * Title Generation
+ */
+
+ export const getTitle = async (labels) => {
+  const prompt = `Give me one very expressive name to call someone who really loves ${labels.genre} with at least two words. Don't explain it`
+  let title = 'TO GEN'
+  const chatres = await openAiApiPost('engines/text-davinci-003/completions', {
+    prompt: prompt,
+    temperature: 0.5,
+    max_tokens: 2048
+  })
+  title = chatres.choices[0].text.replace(/"/g, '');
+  console.log('TITLE', title)
+  return title
+}
+
+/**
  * Story Generation
  */
 
