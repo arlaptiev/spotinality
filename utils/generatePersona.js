@@ -6,6 +6,7 @@ export const generatePersona = async () => {
   try {
     const spotiData = await getSpotiData()
     const labels = await spotiData2Labels(spotiData)
+    console.log(spotiData)
 
     const story = await getStory(labels)
     const personaPicUrl = await requestPersonaPic(story, labels) // retrieve in PullingGen.js
