@@ -7,12 +7,25 @@ const openAiApiFetch = async (path, options = {}) => {
 
   let data = {}
   let response = { status: 0 }
-  let counter = 0
 
-  while (response.status !== 200) {
-    console.log('TRYING OPENAI KEY n', counter)
-    const authToken = config.FRIENDS_API_KEYS[counter]
-    if (authToken) {
+
+  // let counter = 0
+  // while (response.status !== 200) {
+  //   console.log('TRYING OPENAI KEY n', counter)
+  //   const authToken = config.FRIENDS_API_KEYS[counter]
+  //   if (authToken) {
+  //     options.headers = {
+  //       ...options.headers,
+  //       Authorization: `Bearer ${authToken}`,
+  //     };
+
+  //   response = await fetch(`${config.OPENAI_API_URL}/${path}`, options);
+  //   data = await response.json();
+  //   counter += 1;
+  // }
+
+  const authToken = config.OPENAI_KEY
+  if (authToken) {
       options.headers = {
         ...options.headers,
         Authorization: `Bearer ${authToken}`,
@@ -20,9 +33,6 @@ const openAiApiFetch = async (path, options = {}) => {
 
     response = await fetch(`${config.OPENAI_API_URL}/${path}`, options);
     data = await response.json();
-    counter += 1;
-  }
-
   }
 
   if (response.ok && response.status === 200) {
