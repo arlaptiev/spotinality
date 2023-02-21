@@ -25,6 +25,7 @@ const openAiApiFetch = async (path, options = {}) => {
   // }
 
   const authToken = config.OPENAI_KEY
+  console.log(authToken)
   if (authToken) {
       options.headers = {
         ...options.headers,
